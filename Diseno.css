@@ -1,0 +1,109 @@
+.Menu-div {
+    background-color: white;
+    color: black;
+    font-family: 'Bungee';
+    font-size: 22px;
+    display: flex;
+    flex-direction: line;
+    align-items: center;
+    height: 60px;
+    margin-bottom: 10px;
+}
+
+.NuestroProyecto-div {
+    background-color: white;
+    color: black;
+    font-size: 44px;
+    font-family: 'Bungee';
+    height: 275px;
+    width: 699px;
+}
+
+.Menu-p {
+    margin-left: 22px;
+}
+
+.NuestroProyecto-p {
+    margin: 0;
+    padding: 0;
+    line-height: 1;
+    padding-left: 25px;
+}
+
+.Arquitectura-div {
+    background-color: white;
+    color: black;
+    font-size: 44px;
+    font-family: 'Bungee';
+    height: 130px;
+    width: 620px;
+    position: absolute;
+    left:720px;
+    top: 78px;
+}
+.Requerimientos-div {
+    background-color: white;
+    color: black;
+    font-size: 44px;
+    font-family: 'Bungee';
+    height: 130px;
+    width: 620px;
+    position: absolute;
+    left:720px;
+    top: 223px;
+}
+.Pruebas-div {
+    background-color: white;
+    color: black;
+    font-size: 44px;
+    font-family: 'Bungee';
+    height: 320px;
+    width: 275px;
+    position: absolute;
+    left:8px;
+    top: 370px;
+}
+.Develop-div {
+    background-color: white;
+    color: black;
+    font-size: 44px;
+    font-family: 'Bungee';
+    height: 320px;
+    width: 275px;
+    position: absolute;
+    left:300px;
+    top: 370px;
+}
+.Somos-div {
+    background-color: white;
+    color: black;
+    font-size: 44px;
+    font-family: 'Bungee';
+    height: 320px;
+    width: 320px;
+    position: absolute;
+    left:590px;
+    top: 370px;
+}
+.Despliegue-div {
+    background-color: white;
+    color: black;
+    font-size: 44px;
+    font-family: 'Bungee';
+    height: 180px;
+    width: 420px;
+    position: absolute;
+    left:920px;
+    top: 370px;
+}
+.Contactar-div {
+    background-color: white;
+    color: black;
+    font-size: 44px;
+    font-family: 'Bungee';
+    height: 120px;
+    width: 420px;
+    position: absolute;
+    left:920px;
+    top: 570px;
+}
