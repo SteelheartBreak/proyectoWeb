@@ -1,0 +1,156 @@
+*{margin: 0; padding: 0;}
+
+li a{
+    font-family: Bungee;
+    font-size: 18px;
+    color: black;
+    text-decoration: none;
+}
+
+
+div#base{
+    width: 100%;
+    min-height: 100vh;
+    background-color: #E5E5E5;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow: hidden;
+}
+
+nav{
+    width: 98%;
+    background-color: white;
+    font-size: 24px;
+    position: absolute;
+
+    top: 1%;
+    left: 50%;
+    transform: translate(-50%);
+}
+
+.menu-horizontal{
+    list-style: none;
+    display: flex;
+    justify-content: space-around;
+}
+
+div#tituloFormulario{
+    width: 78%;
+    height: 7%;
+
+    text-align: center;
+    background-color: white;
+
+    margin-top: 80px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+
+}
+
+div#cajaFormulario{
+    position: relative;
+    width: 78vw;
+    height: 80vh;
+    background-color: white;
+    margin: 16px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.titulo{
+    font-family: 'Bungee';
+    font-size: 30px;
+    z-index: 1;
+    line-height: 1;
+}
+
+.request{
+    font-family: 'Bungee';
+    font-size: 25px;
+    z-index: 1;
+    line-height: 1;
+}
+
+div#subcajaRequest{
+    width: 78vw;
+    height: 10vh;
+    display: flex;
+    flex-direction: row;
+
+    align-items: center;
+    justify-content: space-between;
+    margin: 14px;
+}
+
+div#subcajaComentario{
+
+    width: 78vw;
+    height: 30vh;
+    display: flex;
+    flex-direction: row;
+    margin: 14px;
+
+    align-items: center;
+    justify-content: space-between;
+}
+
+input#comentario{
+    margin-right: 1vw;
+    width: 60vw;
+    height: 25vh;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    color: #333;
+    z-index: 1;
+}
+
+.mi-input {
+    margin-right: 1vw;
+    width: 60vw;
+    height: 6vh;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    color: #333;
+}
+
+.btn-enviar {
+    font-size: 20px;
+    border: 2px solid #333;
+    border-radius: 5px;
+    background-color: #f0f0f0;
+    height: 5vh;
+    width: 10vw;
+    margin-right: 1vw;
+    
+}
+
+
+
+img#logo{
+    position: absolute;
+    left: 1%;
+    bottom: 1%;
+    width: auto;
+    height: 150px;
+    background-color: white;
+    z-index: 0;
+}
+
+div#errorDiv{
+    color: red;
+    
+    width: 40vw;
+    height: 7vh;
+    margin-left: 20vw;
+}
+
