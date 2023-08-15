@@ -1,0 +1,155 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+div#base {
+    width: 100%;
+    min-height: 100vh;
+    background-color: #E5E5E5;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow: hidden;
+}
+
+li a {
+    font-family: Bungee;
+    font-size: 18px;
+    color: black;
+    text-decoration: none;
+}
+
+nav {
+    width: 98%;
+    background-color: white;
+    font-size: 24px;
+    position: absolute;
+
+    top: 1%;
+    left: 50%;
+    transform: translate(-50%);
+}
+
+.menu-horizontal {
+    list-style: none;
+    display: flex;
+    justify-content: space-around;
+}
+
+div#tituloRequerimientos{
+    width: auto;
+    height: 7%;
+    padding: 1%;
+    text-align: center;
+    background-color: white;
+    margin-top: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.titulo{
+    font-family: 'Bungee';
+    font-size: 60px;
+    z-index: 1;
+    line-height: 1;
+}
+.subtitulo{
+    font-family: 'Bungee';
+    font-size: 40px;
+    z-index: 1;
+    line-height: 1;
+}
+div#titulos{
+    position: relative;
+    width: 100%;
+    margin-top: 1%;
+    display: flex;
+    justify-content: space-around;
+}
+div#titulof{
+    width: auto;
+    height: auto;
+    padding: 1%;
+    text-align: center;
+    align-items: normal;
+    background-color: white;
+    margin-top: 1%;
+    display: flex;
+    justify-content: space-around;
+}
+img#jake{
+    position: absolute;
+    bottom: 80%;
+    height: 100%;
+}
+img#gunter{
+    position: absolute;
+    margin: 20%;
+    height: 30%;
+}
+img#abeja{
+    position: absolute;
+    margin-top: 45%;
+    margin-left: 10%;
+    height: 30%;
+    transform: scaleY(-1);
+}
+img#unicornio{
+    position: absolute;
+    margin-top: 20%;
+    margin-left: 60%;
+    height: 40%;
+    transform: scaleY(-1) scalex(-1) rotate(300deg);
+}
+img#finn{
+    position: absolute;
+    top: 0;
+    left: 84.5%;
+    height: 100%;
+}
+div#titulonf{
+    width: auto;
+    height: auto;
+    padding: 1%;
+    text-align: center;
+    align-items: normal;
+    background-color: white;
+    margin-top: 1%;
+    display: flex;
+    justify-content: space-around;
+}
+
+div#contenidos{
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+}
+div#funcionales{
+    width: 50%;
+    margin-top: 1%;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+div#nofuncionales{
+    width: 50%;
+    margin-top: 1%;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    
+}
+.texto{
+    font-family: 'Bungee';
+    width: auto;
+    font-size: 30px;
+    z-index: 1;
+    line-height: 1;
+    padding: 3%;
+    text-align: center;
+    background-color: white;
+    margin-top: 3%;
+}
