@@ -1,0 +1,130 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;   
+    font-family: Bungee;
+    font-size: 20px;
+}
+
+div#base{
+    width: 100%;
+    height: 100vh;
+    background-color: #E5E5E5;
+    
+}
+
+nav{
+   
+    width: 90%;
+    margin: auto;
+    background-color: white;
+    font-size: 20px;
+    
+    
+}
+.menu-horizontal{
+    list-style: none;
+    display: flex;
+    justify-content: space-around;
+}
+
+div#fila1Izquierda{
+    width: 49%;
+    height: 94%;
+    margin-top: 1%;
+    margin-left: 0.5%;
+    background-color: white;
+    display: inline-block;
+}
+div#fila1Derecha{
+    width: 49%;
+    height: 94%;
+    margin-top: 1%;
+    margin-right: 0.5%;
+    margin-left: 0.5%;
+  
+    display: inline-block;
+}
+
+div#primeraFila{
+    width: 100%;
+    height: 50%;
+    
+}
+
+div#segundaFila{
+    width: 100%;
+    height: 50%;
+    position: relative;
+    
+}
+
+div#arquitectura{
+    width: 100%;
+    height: 47.4%;
+    background-color:white;
+}
+
+div#requerimientos{
+    width: 100%;
+    height: 48.5%;
+    margin-top: 2.5%;
+    background-color:white;
+}
+
+div#pruebas{
+    width: 17.5%;
+    height: 94%;
+    
+    margin-left: 0.5%;
+    background-color: white;
+    position: relative;
+    display: inline-block;
+}
+
+div#develop{
+    width: 17.5%;
+    height: 94%;
+    top: 4%;
+    margin-left: 0.5%;
+    background-color: white;
+    position: relative;
+    display: inline-block;
+
+}
+
+div#nosotros{
+    width: 30%;
+    height: 94%;
+    top: 4%;
+    margin-left: 0.5%;
+    background-color: white;
+    position: relative;
+    display: inline-block;
+
+}
+
+div#despliegue_contactenos{
+    width: 31.5%;
+    height: 94%;
+    top: 4%;
+    margin-left: 0.5%;
+ 
+    position: relative;
+    display: inline-block;
+
+}
+
+div#despliegue{
+    height: 61%;
+    width: 100%;
+    background-color:white;
+}
+
+div#contactenos{
+    height: 33.5%;
+    width: 100%;
+    margin-top: 4%;
+    background-color:white;
+}
+
