@@ -12,6 +12,7 @@ div#base {
     flex-direction: column;
     align-items: center;
     overflow: hidden;
+    position: relative;
 }
 
 li a {
@@ -23,7 +24,7 @@ li a {
 .Texto
 {
     color: black;
-    font-size: 65px;
+    font-size: 44px;
     font-family: Bungee;
     margin: 0;
     padding: 0;
@@ -53,7 +54,7 @@ nav {
     width: 53.5%;
     position:absolute ;
     left: 1%;
-    top: 8%;
+    top: 10%;
     border-radius: 10px;
     cursor: pointer;
 }
@@ -91,7 +92,7 @@ div#textoNuestroProyecto{
     height: 17%;
     width: 44%;
     position:absolute ;
-    top: 8%;
+    top: 10%;
     transform: translatex(+125%);
     cursor: pointer;
 }
@@ -109,7 +110,7 @@ div#textoNuestroProyecto{
 
 #Sandia img {
     width: 140%;
-    height: auto%;
+    height: auto;
     display: block;
 }
 .Requerimientos-div {
@@ -118,7 +119,7 @@ div#textoNuestroProyecto{
     height: 17%;
     width: 44%;
     position:absolute ;
-    top: 26%;
+    top: 28%;
     transform: translatex(+125%);
     cursor: pointer;
 }
@@ -130,13 +131,13 @@ div#textoNuestroProyecto{
     height: 88%;
     width: auto;
     top: 49%;
-    left:-22%;
+    left:-38%   ;
     transform: translateY(-50%);
 }
 
 #BMO img {
-    width: 40%;
-    height: auto%;
+    width: 30%;
+    height: auto;
     display: block;
 }
 .Pruebas-div {
@@ -145,7 +146,7 @@ div#textoNuestroProyecto{
     width: 21.5%;
     position:absolute ;
     left: 1%;
-    top: 45%;
+    top: 47%;
     border-radius: 10px;
     cursor: pointer;
 }
@@ -172,7 +173,7 @@ div#textoNuestroProyecto{
     width: 21.5%;
     position:absolute;
     left: 23%;
-    top: 45%;
+    top: 47%;
     border-radius: 10px;
     cursor: pointer;
 }
@@ -201,7 +202,7 @@ div#textoNuestroProyecto{
     width: 21.5%;
     position:absolute ;
     left: 45%;
-    top: 45%;
+    top: 47%;
     border-radius: 10px;
     cursor: pointer;
 }
@@ -230,7 +231,7 @@ div#textoNuestroProyecto{
         width:  32%;
         position:absolute ;
         left: 67%;
-        top: 45%;
+        top: 47%;
         border-radius: 10px;
         cursor: pointer;
 }
@@ -259,7 +260,7 @@ div#textoNuestroProyecto{
             width: 32%;
             position:absolute ;
             left: 67%;
-            top: 76%;
+            top: 78%;
             border-radius: 10px;
             cursor: pointer;
 }
