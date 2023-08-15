@@ -138,8 +138,6 @@ div#imagenSantiago img {
     margin: 0 auto  ;
     bottom: 0;
     transform: translateY(-15%);
-    
-    
 }
 
 div#textoSantiago{
@@ -193,9 +191,7 @@ div#andresMarroquin{
     width: 25%;
     position:absolute ;
     background-color: white;
-
     right: 1%;
-    
     top: 9%;
 }
 
