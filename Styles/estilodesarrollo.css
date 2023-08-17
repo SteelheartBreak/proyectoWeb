@@ -5,6 +5,7 @@
 
 div#base {
     width: 100%;
+    min-height: 100vh;
     background-color: #E5E5E5;
 
     display: flex;
@@ -49,6 +50,7 @@ nav {
 
 div#descripcion {
     width: 98%;
+    height: 100vw;
 
     text-align: center;
     background-color: white;
