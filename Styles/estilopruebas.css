@@ -5,9 +5,7 @@
 
 div#base {
     width: 100%;
-    min-height: 100vh;
     background-color: #E5E5E5;
-
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -48,15 +46,10 @@ nav {
     justify-content: space-around;
 }
 
-div#descripcion {
+div#pruebas {
     width: 98%;
-    height: 100vw;
-
     text-align: center;
-    background-color: white;
-
     margin-top: 80px;
-
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -64,46 +57,45 @@ div#descripcion {
     position: relative;
 }
 
-.Proyecto {
+.titulo {
     margin: 1%;
+    padding: 1%;
+    background-color: white;
     font-family: 'Bungee';
     font-size: 60px;
     line-height: 1;
 }
-
-.informacion {
-
-    text-align: justify;
-    width: 50%;
+div#tipos  {
+    width: 100%;
+    position: relative;
+    display: flex;
+    flex-direction: row;
+}
+.espacio  {
+    padding: 1%;
+    width: 46%;
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    margin: 4%;
+}
+.subtitulo {
     font-family: 'Bungee';
-    font-size: 20px;
+    font-size: 40px;
+    margin: 4%;
+    line-height: 1;
 }
-
-.image {
-    position: absolute;
+.contenido1 {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
 }
-
-
-.image1 {
-    padding-left: 75%;
-    width: 25%;
-    margin-top: 0%;
+.texto {
+    margin: 4%;
+    font-family: 'Bungee';
+    font-size: 15px;
+    line-height: 1.5;
 }
-
-.image2 {
-    padding-right: 75%;
-    width: 25%;
-    margin-top: 25%;
-}
-
-.image3 {
-    padding-left: 75%;
-    width: 25%;
-    margin-top: 50%;
-}
-
-.image4 {
-    padding-right: 75%;
-    width: 25%;
-    margin-top: 75%;
+.imagen {
+    width: 100%;
 }
