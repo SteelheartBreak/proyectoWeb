@@ -11,19 +11,15 @@ botoness.forEach(boton => {
         boton.style.color = 'black';
     });
 });
+const contenedor = document.querySelector('.cambiar-estilo2');
 
-const botones = document.querySelectorAll('button');
-const overlay = document.getElementById('overlay');
-
-botones.forEach((boton, index) => {
-  boton.addEventListener('click', () => {
-    overlay.classList.add('show-overlay');
-    const cuadros = document.querySelectorAll('.cuadro');
-    cuadros.forEach(cuadro => cuadro.style.display = 'none');
-    cuadros[index].style.display = 'block';
-  });
+contenedor.addEventListener('mouseover', () => {
+    contenedor.style.backgroundColor = 'gray';
+    contenedor.style.color = 'white';
+});
+contenedor.addEventListener('mouseout', () => {
+    contenedor.style.backgroundColor = 'white';
+    contenedor.style.color = 'black';
 });
 
-overlay.addEventListener('click', () => {
-  overlay.classList.remove('show-overlay');
-});
+
