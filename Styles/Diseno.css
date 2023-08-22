@@ -129,9 +129,9 @@ div#textoNuestroProyecto{
     align-items: center;
     display: flex;
     height: 88%;
-    width: 44%;
+    width: 44;
     top: 49%;
-    left:-10%;
+    left:-10%   ;
     transform: translateY(-50%);
 }
 
@@ -211,32 +211,11 @@ div#textoNuestroProyecto{
     justify-content: center;
     align-items: center;
     display: flex;
-    height: 82%;
+    height: 88%;
     width: auto;
     top: 60%;
     left:2%;
     transform: translateY(-50%);
-}
-
-.cambiar-estilo {
-    background-color: white;
-    color: black;
-    transition: background-color 0.3s, color 0.3s, box-shadow 0.3s;
-}
-
-.cambiar-estilo:hover {
-    background-color: black;
-    color: white;
-    box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.3);
-}
-.cambiar-estilo2 {
-    background-color: white;
-    transition: background-color 0.3s, color 0.3s, box-shadow 0.3s;
-}
-
-.cambiar-estilo2:hover {
-    background-color: gray;
-    box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.3);
 }
 
 #Grupo img {
