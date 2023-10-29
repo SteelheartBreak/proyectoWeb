@@ -9,7 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import com.musicalist.intermediator.intermediator.Modelo.Genero;
-import com.musicalist.intermediator.intermediator.Servicios.Genero.GeneroServicio;
+import com.musicalist.intermediator.intermediator.Repositorio.GeneroRepositorio;
 
 @RestController
 @RequestMapping("/genero")
@@ -17,11 +17,11 @@ import com.musicalist.intermediator.intermediator.Servicios.Genero.GeneroServici
 public class GeneroController {
 
     @Autowired
-    GeneroServicio GeneroServicio;
+    GeneroRepositorio generoRepositorio;
 
     @GetMapping("/all")
     public ResponseEntity<List<Genero>>  getAll(){
-        List<Genero> generos = GeneroServicio.findAll();
+        List<Genero> generos = generoRepositorio.findAll();
 
         ResponseEntity<List<Genero>> response = new ResponseEntity<>(generos, HttpStatus.OK);
         return response;

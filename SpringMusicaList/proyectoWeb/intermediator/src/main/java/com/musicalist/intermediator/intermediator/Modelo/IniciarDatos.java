@@ -30,7 +30,6 @@ public class IniciarDatos implements ApplicationRunner{
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
-
         //generos
         generoRepositorio.save(new Genero("Rock"));
         generoRepositorio.save(new Genero("Pop"));
@@ -88,10 +87,5 @@ public class IniciarDatos implements ApplicationRunner{
             cancion.setVotantes(votantesLISTA);
             cancionRepositorio.save(cancion);
         }
-
-        
-
-
     }
-    
 }

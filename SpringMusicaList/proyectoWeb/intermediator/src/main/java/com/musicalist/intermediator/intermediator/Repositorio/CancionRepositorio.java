@@ -6,8 +6,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface CancionRepositorio extends JpaRepository<Cancion, Long>{
 
-    public Cancion findByNombre (String nombre);
-
-    
+    Cancion findByNombre(String nombre);
 
 }
