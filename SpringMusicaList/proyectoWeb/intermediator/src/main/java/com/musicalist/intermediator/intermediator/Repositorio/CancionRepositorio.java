@@ -8,4 +8,6 @@ public interface CancionRepositorio extends JpaRepository<Cancion, Long>{
 
     Cancion findByNombre(String nombre);
 
+    void deleteById(Integer id);
+
 }

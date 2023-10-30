@@ -58,10 +58,13 @@ public class CancionController {
 
 
     @DeleteMapping("/delete/{id}")
-    @Operation(summary = "Borrar una cancion por id")
-    public ResponseEntity<String>  deleteById(@PathVariable Long id){
-         cancionRepositorio.deleteById(id);
-         return new ResponseEntity<>("Cliente eliminado", HttpStatus.NO_CONTENT);  
+    public ResponseEntity<String> borrar(@PathVariable Integer id) {
+        if (id != null) {
+            cancionRepositorio.deleteById(id);
+            return new ResponseEntity<>("Usuario eliminado", HttpStatus.NO_CONTENT);
+        } else {
+            return new ResponseEntity<>("ID de usuario nulo", HttpStatus.BAD_REQUEST);
+        }
     }
 
     /*

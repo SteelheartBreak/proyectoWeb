@@ -1,6 +1,5 @@
 package com.musicalist.intermediator.intermediator.Controlador;
 
-
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +19,7 @@ public class GeneroController {
     GeneroRepositorio generoRepositorio;
 
     @GetMapping("/all")
-    public ResponseEntity<List<Genero>>  getAll(){
+    public ResponseEntity<List<Genero>> getAll() {
         List<Genero> generos = generoRepositorio.findAll();
 
         ResponseEntity<List<Genero>> response = new ResponseEntity<>(generos, HttpStatus.OK);
@@ -28,5 +27,14 @@ public class GeneroController {
 
     }
 
-  
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<String> borrar(@PathVariable Integer id) {
+        if (id != null) {
+            generoRepositorio.deleteById(id);
+            return new ResponseEntity<>("Usuario eliminado", HttpStatus.NO_CONTENT);
+        } else {
+            return new ResponseEntity<>("ID de usuario nulo", HttpStatus.BAD_REQUEST);
+        }
+    }
+
 }
