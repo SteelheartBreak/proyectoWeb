@@ -1,8 +1,7 @@
 package com.musicalist.intermediator.intermediator.Modelo;
-
-
-import java.util.ArrayList;
 import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.*;
 
@@ -20,9 +19,9 @@ public class Usuario {
     private String correo;
     private String rol;
 
-    @ManyToMany
-    @JoinTable(name = "canciones_like", joinColumns = @JoinColumn(name = "cancion_id"), inverseJoinColumns = @JoinColumn(name = "usuario_id"))
-    private List<Cancion> cancionesLiked = new ArrayList<>();
+    @ManyToMany(mappedBy = "votantes")
+    @JsonIgnore
+    private List<Cancion> cancionesLiked;
 
     public Usuario() {
     }

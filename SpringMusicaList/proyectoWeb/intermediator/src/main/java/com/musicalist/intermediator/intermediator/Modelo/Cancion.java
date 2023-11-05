@@ -30,7 +30,7 @@ public class Cancion {
 
     @ManyToMany
     @JsonIgnore
-    @JoinTable(name = "canciones_like", joinColumns = @JoinColumn(name = "usuario_id"), inverseJoinColumns = @JoinColumn(name = "cancion_id"))
+    @JoinTable(name = "canciones_like", joinColumns = @JoinColumn(name = "cancion_id"), inverseJoinColumns = @JoinColumn(name = "usuario_id"))
     private List<Usuario> votantes = new ArrayList<>();
 
     public Cancion() {

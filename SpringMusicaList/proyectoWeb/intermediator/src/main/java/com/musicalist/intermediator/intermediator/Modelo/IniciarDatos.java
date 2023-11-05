@@ -82,6 +82,10 @@ public class IniciarDatos implements ApplicationRunner{
             List<Usuario> votantesLISTA = new ArrayList<>();
             Usuario usuario1 = usuarios.get(random.nextInt(usuarios.size()));
             Usuario usuario2 = usuarios.get(random.nextInt(usuarios.size()));
+            while(usuario1.getId()==usuario2.getId())
+            {
+             usuario2 = usuarios.get(random.nextInt(usuarios.size()));
+            }
             votantesLISTA.add(usuario1);
             votantesLISTA.add(usuario2);
             cancion.setVotantes(votantesLISTA);

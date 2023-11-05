@@ -56,6 +56,15 @@ public class CancionController {
             return response;
     }
 
+    @GetMapping("/findGender/{id}")
+    @Operation(summary = "Obtener una cancion por genero")
+    public ResponseEntity<List<Cancion>>  findByGender(@PathVariable Long id){
+        List<Cancion> canciones =cancionRepositorio.findByGenero(id);
+
+        ResponseEntity<List<Cancion>> response = new ResponseEntity<>(canciones, HttpStatus.OK);
+        return response;
+    }
+
 
     @DeleteMapping("/delete/{id}")
     @Operation(summary = "Borrar una cancion por id")
