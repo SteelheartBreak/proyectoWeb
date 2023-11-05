@@ -6,8 +6,10 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.musicalist.intermediator.intermediator.Modelo.Canciones_like;
 
-public interface VotoRepositorio extends JpaRepository<Canciones_like, Long> {
+public interface Canciones_likeRepositorio extends JpaRepository<Canciones_like, Long> {
 
     List<Canciones_like> findByUsuarioId(Long id);
+
+    List<Canciones_like> findByCancionId(Long id);
 
 }

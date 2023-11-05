@@ -1,6 +1,7 @@
 package com.musicalist.intermediator.intermediator.Controlador;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -30,10 +31,12 @@ public class GeneroController {
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<String> borrar(@PathVariable Integer id) {
         if (id != null) {
-            generoRepositorio.deleteById(id);
-            return new ResponseEntity<>("Usuario eliminado", HttpStatus.NO_CONTENT);
+            Optional<Genero> generoEncontrado = generoRepositorio.findById(id);
+            Genero genero = generoEncontrado.get();
+            generoRepositorio.delete(genero);
+            return new ResponseEntity<>("Genero eliminado", HttpStatus.NO_CONTENT);
         } else {
-            return new ResponseEntity<>("ID de usuario nulo", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>("ID de genero nulo", HttpStatus.BAD_REQUEST);
         }
     }
 

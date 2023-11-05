@@ -20,6 +20,8 @@ public class CancionController {
 
     @Autowired
     CancionRepositorio cancionRepositorio;
+    @Autowired
+    Canciones_likeController voto;
 
     @GetMapping("/all")
     @Operation(summary = "Obtener todas las canciones")
@@ -69,10 +71,13 @@ public class CancionController {
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<String> borrar(@PathVariable Integer id) {
         if (id != null) {
-            cancionRepositorio.deleteById(id);
-            return new ResponseEntity<>("Usuario eliminado", HttpStatus.NO_CONTENT);
+            Optional<Cancion> cancionEncontrada = cancionRepositorio.findById(id);
+            Cancion cancion = cancionEncontrada.get();
+            voto.deleteByCancionId(cancion.getId());
+            cancionRepositorio.delete(cancion);
+            return new ResponseEntity<>("Cancion eliminado", HttpStatus.NO_CONTENT);
         } else {
-            return new ResponseEntity<>("ID de usuario nulo", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>("ID de Cancion nulo", HttpStatus.BAD_REQUEST);
         }
     }
 

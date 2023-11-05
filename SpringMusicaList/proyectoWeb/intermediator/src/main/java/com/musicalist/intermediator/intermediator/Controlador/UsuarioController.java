@@ -18,6 +18,8 @@ import io.swagger.v3.oas.annotations.Operation;
 public class UsuarioController {
     @Autowired
     UsuarioRepositorio usuarioRepositorio;
+    @Autowired
+    Canciones_likeController voto;
 
     @CrossOrigin
     @GetMapping("/find/{correo}")
@@ -59,6 +61,7 @@ public class UsuarioController {
         if (id != null) {
             Optional<Usuario> usuarioEncontrada = usuarioRepositorio.findById(id);
             Usuario usuario = usuarioEncontrada.get();
+            voto.deleteByUsuarioId(usuario.getId());
             usuarioRepositorio.delete(usuario);
             return new ResponseEntity<>("Usuario eliminado", HttpStatus.NO_CONTENT);
         } else {

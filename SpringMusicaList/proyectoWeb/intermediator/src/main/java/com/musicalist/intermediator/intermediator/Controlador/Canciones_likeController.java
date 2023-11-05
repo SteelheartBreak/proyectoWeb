@@ -11,23 +11,30 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.musicalist.intermediator.intermediator.Modelo.Canciones_like;
-import com.musicalist.intermediator.intermediator.Repositorio.VotoRepositorio;
+import com.musicalist.intermediator.intermediator.Repositorio.Canciones_likeRepositorio;
 
 import io.swagger.v3.oas.annotations.Operation;
 
 @RestController
 @RequestMapping("/voto")
-public class VotoController {
+public class Canciones_likeController {
 
     @Autowired
-    VotoRepositorio votoRepositorio;
+    Canciones_likeRepositorio votoRepositorio;
 
-    @DeleteMapping("/delete/{id}")
-    @Operation(summary = "Borrar una cancion por id")
-    public ResponseEntity<String> deleteById(@PathVariable Long id) {
+    @DeleteMapping("/delete/User/{id}")
+    @Operation(summary = "Borrar un voto por id")
+    public ResponseEntity<String> deleteByUsuarioId(@PathVariable Long id) {
         List<Canciones_like> Votos=votoRepositorio.findByUsuarioId(id);
         votoRepositorio.deleteAll(Votos);
-        return new ResponseEntity<>("Cliente eliminado", HttpStatus.NO_CONTENT);
+        return new ResponseEntity<>("Voto eliminado", HttpStatus.NO_CONTENT);
+    }
+    @DeleteMapping("/delete/Cancion/{id}")
+    @Operation(summary = "Borrar un voto por id")
+    public ResponseEntity<String> deleteByCancionId(@PathVariable Long id) {
+        List<Canciones_like> Votos=votoRepositorio.findByCancionId(id);
+        votoRepositorio.deleteAll(Votos);
+        return new ResponseEntity<>("Voto eliminado", HttpStatus.NO_CONTENT);
     }
 
 }
