@@ -10,10 +10,12 @@ import org.springframework.data.repository.query.Param;
 public interface CancionRepositorio extends JpaRepository<Cancion, Long>{
 
     Cancion findByNombre(String nombre);
-
     // busca canciones por su GENERO_ID
     @Query("SELECT c FROM Cancion c WHERE c.genero.id = :id")
     List<Cancion> findByGenero(@Param("id") Long id);
+
+
+    void deleteById(Integer id);
 
 
 }

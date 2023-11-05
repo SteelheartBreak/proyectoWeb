@@ -19,15 +19,6 @@ public class UsuarioController {
     @Autowired
     UsuarioRepositorio usuarioRepositorio;
 
-    @GetMapping("/all")
-    public ResponseEntity<List<Usuario>> getAll() {
-        List<Usuario> usuarios = usuarioRepositorio.findAll();
-
-        ResponseEntity<List<Usuario>> response = new ResponseEntity<>(usuarios, HttpStatus.OK);
-        return response;
-
-    }
-
     @CrossOrigin
     @GetMapping("/find/{correo}")
     @Operation(summary = "Obtener un usuario por correo")
@@ -43,11 +34,8 @@ public class UsuarioController {
         }
     }
 
-    @CrossOrigin
-    @PostMapping("/add")
-    @Operation(summary = "Agregar una cancion")
+    @Operation(summary = "Agregar un Usuario")
     public ResponseEntity<Usuario> agregar(@RequestBody Usuario user) {
-        System.out.println("Hola");
         if (user == null) {
             ResponseEntity<Usuario> response = new ResponseEntity<>(user, HttpStatus.BAD_REQUEST);
             return response;
@@ -55,5 +43,26 @@ public class UsuarioController {
         usuarioRepositorio.save(user);
         ResponseEntity<Usuario> response = new ResponseEntity<>(user, HttpStatus.CREATED);
         return response;
+    }
+
+    @GetMapping("/all")
+    @Operation(summary = "Obtener todos los usuarios")
+    public ResponseEntity<List<Usuario>> getAll() {
+        List<Usuario> usuarios = usuarioRepositorio.findAll();
+
+        ResponseEntity<List<Usuario>> response = new ResponseEntity<>(usuarios, HttpStatus.OK);
+        return response;
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<String> borrar(@PathVariable Integer id) {
+        if (id != null) {
+            Optional<Usuario> usuarioEncontrada = usuarioRepositorio.findById(id);
+            Usuario usuario = usuarioEncontrada.get();
+            usuarioRepositorio.delete(usuario);
+            return new ResponseEntity<>("Usuario eliminado", HttpStatus.NO_CONTENT);
+        } else {
+            return new ResponseEntity<>("ID de usuario nulo", HttpStatus.BAD_REQUEST);
+        }
     }
 }
