@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import com.musicalist.intermediator.intermediator.Modelo.Cancion;
 import com.musicalist.intermediator.intermediator.Repositorio.CancionRepositorio;
 
@@ -20,87 +19,77 @@ public class CancionController {
 
     @Autowired
     CancionRepositorio cancionRepositorio;
-    @Autowired
-    Canciones_likeController voto;
 
     @GetMapping("/all")
     @Operation(summary = "Obtener todas las canciones")
-    public ResponseEntity<List<Cancion>>  getAll(){
+    public ResponseEntity<List<Cancion>> getAll() {
         List<Cancion> canciones = cancionRepositorio.findAll();
-
-        ResponseEntity<List<Cancion>> response = new ResponseEntity<>(canciones, HttpStatus.OK);
-        return response;
+        return new ResponseEntity<>(canciones, HttpStatus.OK);
     }
 
     @GetMapping("/find/{id}")
-    @Operation(summary = "Obtener una cancion por id")
-    public ResponseEntity<Cancion>  findById(@PathVariable Long id){
+    @Operation(summary = "Obtener una canción por id")
+    public ResponseEntity<Cancion> findById(@PathVariable Long id) {
         Optional<Cancion> cancionEncontrada = cancionRepositorio.findById(id);
-        Cancion cancion=cancionEncontrada.get();
-        if(cancion == null){
-            ResponseEntity<Cancion> response = new ResponseEntity<>(cancion, HttpStatus.NOT_FOUND);
-            return response;
+        if (cancionEncontrada.isPresent()) {
+            return new ResponseEntity<>(cancionEncontrada.get(), HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         }
-        ResponseEntity<Cancion> response = new ResponseEntity<>(cancion, HttpStatus.OK);
-            return response;
     }
 
     @GetMapping("/findName/{nombre}")
-    @Operation(summary = "Obtener una cancion por Nombre")
-    public ResponseEntity<Cancion>  findByName(@PathVariable String nombre){
-        Cancion cancion =cancionRepositorio.findByNombre(nombre);
-
-        if(cancion == null){
-            ResponseEntity<Cancion> response = new ResponseEntity<>(cancion, HttpStatus.NOT_FOUND);
-            return response;
-        }
-        ResponseEntity<Cancion> response = new ResponseEntity<>(cancion, HttpStatus.OK);
-            return response;
+    @Operation(summary = "Obtener una canción por Nombre")
+    public ResponseEntity<Cancion> findByName(@PathVariable String nombre) {
+        Cancion cancion = cancionRepositorio.findByNombre(nombre);
+        return ResponseEntity.ok(cancion);
     }
 
     @GetMapping("/findGender/{id}")
-    @Operation(summary = "Obtener una cancion por genero")
-    public ResponseEntity<List<Cancion>>  findByGender(@PathVariable Long id){
-        List<Cancion> canciones =cancionRepositorio.findByGenero(id);
-
-        ResponseEntity<List<Cancion>> response = new ResponseEntity<>(canciones, HttpStatus.OK);
-        return response;
+    @Operation(summary = "Obtener canciones por género")
+    public ResponseEntity<List<Cancion>> findByGender(@PathVariable Long id) {
+        List<Cancion> canciones = cancionRepositorio.findByGenero(id);
+        return new ResponseEntity<>(canciones, HttpStatus.OK);
     }
-
 
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<String> borrar(@PathVariable Integer id) {
+    @Operation(summary = "Eliminar una canción por id")
+    public ResponseEntity<String> borrar(@PathVariable Long id) {
         if (id != null) {
             Optional<Cancion> cancionEncontrada = cancionRepositorio.findById(id);
-            Cancion cancion = cancionEncontrada.get();
-            voto.deleteByCancionId(cancion.getId());
-            cancionRepositorio.delete(cancion);
-            return new ResponseEntity<>("Cancion eliminado", HttpStatus.NO_CONTENT);
+            if (cancionEncontrada.isPresent()) {
+                cancionRepositorio.delete(cancionEncontrada.get());
+                return new ResponseEntity<>("Canción eliminada", HttpStatus.NO_CONTENT);
+            } else {
+                return new ResponseEntity<>("Canción no encontrada", HttpStatus.NOT_FOUND);
+            }
         } else {
-            return new ResponseEntity<>("ID de Cancion nulo", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>("ID de Canción nulo", HttpStatus.BAD_REQUEST);
         }
     }
 
-    /*
-    //esta debe buscar si el genero existe
     @PutMapping("/update/{id}")
-    @Operation(summary = "Actualizar una cancion por id")
-    public ResponseEntity<String>  updateById(@PathVariable Long id, @RequestBody Cancion cancion){
-        
-        return new ResponseEntity<>("Cancion actualizada correctamente", HttpStatus.OK);
-    }*/
-
-    /*
-    esta tambien
-    @PostMapping("/add")
-    @Operation(summary = "Agregar una cancion")
-    public ResponseEntity<Cancion>  add(@RequestBody Cancion cancion){
-        if(cancion == null){
-            ResponseEntity<Cancion> response = new ResponseEntity<>(cancion, HttpStatus.BAD_REQUEST);
-            return response;
+    @Operation(summary = "Actualizar una canción por id")
+    public ResponseEntity<String> actualizar(@PathVariable Long id, @RequestBody Cancion updatedCancion) {
+        Optional<Cancion> cancionEncontrada = cancionRepositorio.findById(id);
+        if (cancionEncontrada.isPresent()) {
+            Cancion cancion = cancionEncontrada.get();
+            cancion.setNombre(updatedCancion.getNombre());
+            cancionRepositorio.save(cancion);
+            return new ResponseEntity<>("Canción actualizada correctamente", HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>("Canción no encontrada", HttpStatus.NOT_FOUND);
         }
-        ResponseEntity<Cancion> response = new ResponseEntity<>(cancion, HttpStatus.CREATED);
-            return response;
-    }*/
- 
+    }
+
+    @PostMapping("/add")
+    @Operation(summary = "Agregar una canción")
+    public ResponseEntity<Cancion> add(@RequestBody Cancion cancion) {
+        if (cancion != null) {
+            cancionRepositorio.save(cancion);
+            return new ResponseEntity<>(cancion, HttpStatus.CREATED);
+        } else {
+            return new ResponseEntity<>(cancion, HttpStatus.BAD_REQUEST);
+        }
+    }
 }

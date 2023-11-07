@@ -11,4 +11,6 @@ public interface GeneroRepositorio extends JpaRepository<Genero, Long>{
 
     Optional<Genero> findById(Integer id);
 
+    Genero findBynombre(String nombre);
+
 }

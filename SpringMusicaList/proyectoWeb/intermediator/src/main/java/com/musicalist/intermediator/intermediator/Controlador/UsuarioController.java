@@ -22,21 +22,15 @@ public class UsuarioController {
     Canciones_likeController voto;
 
     @CrossOrigin
-    @GetMapping("/find/{correo}")
+    @GetMapping("/find/correo/{correo}")
     @Operation(summary = "Obtener un usuario por correo")
-    public ResponseEntity<Usuario> findById(@PathVariable String correo) {
-        Optional<Usuario> usuarioEncontrada = usuarioRepositorio.findByCorreo(correo);
-
-        if (usuarioEncontrada.isPresent()) {
-            Usuario usuario = usuarioEncontrada.get();
-            return ResponseEntity.ok(usuario);
-        } else {
-            Usuario usuarioVacio = new Usuario();
-            return ResponseEntity.ok(usuarioVacio);
-        }
+    public ResponseEntity<Usuario> findByCorreo(@PathVariable String correo) {
+        Usuario usuarioEncontrada = usuarioRepositorio.findByCorreo(correo);
+        return ResponseEntity.ok(usuarioEncontrada);
     }
 
     @Operation(summary = "Agregar un Usuario")
+    @PostMapping("/add")
     public ResponseEntity<Usuario> agregar(@RequestBody Usuario user) {
         if (user == null) {
             ResponseEntity<Usuario> response = new ResponseEntity<>(user, HttpStatus.BAD_REQUEST);
@@ -59,13 +53,32 @@ public class UsuarioController {
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<String> borrar(@PathVariable Integer id) {
         if (id != null) {
-            Optional<Usuario> usuarioEncontrada = usuarioRepositorio.findById(id);
-            Usuario usuario = usuarioEncontrada.get();
+            Usuario usuario = usuarioRepositorio.findById(id);
             voto.deleteByUsuarioId(usuario.getId());
             usuarioRepositorio.delete(usuario);
             return new ResponseEntity<>("Usuario eliminado", HttpStatus.NO_CONTENT);
         } else {
             return new ResponseEntity<>("ID de usuario nulo", HttpStatus.BAD_REQUEST);
         }
+    }
+
+    @GetMapping("/find/id/{id}")
+    @Operation(summary = "Obtener un usuario por id")
+    public ResponseEntity<Usuario> findById(@PathVariable Integer id) {
+        Usuario usuarioEncontrada = usuarioRepositorio.findById(id);
+        return ResponseEntity.ok(usuarioEncontrada);
+    }
+
+    @PutMapping("/modificar")
+    public ResponseEntity<Usuario> modificar (@RequestBody Usuario user)
+    {
+        Optional<Usuario> usuarioEncontrada = usuarioRepositorio.findById(user.getId());
+        Usuario Final=usuarioEncontrada.get();
+        Final.setNombre(user.getNombre());
+        Final.setCorreo(user.getCorreo());
+        Final.setContrasenia(user.getContrasenia());
+        Final.setRol(user.getRol());
+        usuarioRepositorio.save(Final);
+        return ResponseEntity.ok(Final);
     }
 }

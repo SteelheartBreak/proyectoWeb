@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import com.musicalist.intermediator.intermediator.Modelo.Genero;
 import com.musicalist.intermediator.intermediator.Repositorio.GeneroRepositorio;
 
@@ -27,6 +26,12 @@ public class GeneroController {
         return response;
 
     }
+    @GetMapping("/find/{nombre}")
+    public ResponseEntity<Genero> getGeneroNombre(@PathVariable String nombre) {
+        Genero genero=generoRepositorio.findBynombre(nombre);
+        return ResponseEntity.ok(genero);
+
+    }
 
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<String> borrar(@PathVariable Integer id) {
@@ -40,4 +45,14 @@ public class GeneroController {
         }
     }
 
+    @PostMapping("/add")
+    public ResponseEntity<Genero> agregar(@RequestBody Genero genero) {
+        if (genero == null) {
+            ResponseEntity<Genero> response = new ResponseEntity<>(genero, HttpStatus.BAD_REQUEST);
+            return response;
+        }
+        generoRepositorio.save(genero);
+        ResponseEntity<Genero> response = new ResponseEntity<>(genero, HttpStatus.CREATED);
+        return response;
+    }
 }
