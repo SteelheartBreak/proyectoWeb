@@ -26,9 +26,15 @@ public class GeneroController {
         return response;
 
     }
-    @GetMapping("/find/{nombre}")
+    @GetMapping("/find/nombre/{nombre}")
     public ResponseEntity<Genero> getGeneroNombre(@PathVariable String nombre) {
         Genero genero=generoRepositorio.findBynombre(nombre);
+        return ResponseEntity.ok(genero);
+
+    }
+    @GetMapping("/find/id/{id}")
+    public ResponseEntity<Genero> getGeneroID(@PathVariable Integer id) {
+         Genero genero=generoRepositorio.findById(id);
         return ResponseEntity.ok(genero);
 
     }
@@ -36,8 +42,7 @@ public class GeneroController {
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<String> borrar(@PathVariable Integer id) {
         if (id != null) {
-            Optional<Genero> generoEncontrado = generoRepositorio.findById(id);
-            Genero genero = generoEncontrado.get();
+            Genero genero = generoRepositorio.findById(id);
             generoRepositorio.delete(genero);
             return new ResponseEntity<>("Genero eliminado", HttpStatus.NO_CONTENT);
         } else {
@@ -54,5 +59,14 @@ public class GeneroController {
         generoRepositorio.save(genero);
         ResponseEntity<Genero> response = new ResponseEntity<>(genero, HttpStatus.CREATED);
         return response;
+    }
+    @PutMapping("/modificar")
+    public ResponseEntity<Genero> modificar (@RequestBody Genero genero)
+    {
+        Optional<Genero> generoEncontrada = generoRepositorio.findById(genero.getId());
+        Genero Final=generoEncontrada.get();
+        Final.setNombre(genero.getNombre());
+        generoRepositorio.save(Final);
+        return ResponseEntity.ok(Final);
     }
 }
