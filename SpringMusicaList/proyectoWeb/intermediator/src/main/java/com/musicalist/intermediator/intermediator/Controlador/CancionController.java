@@ -92,4 +92,18 @@ public class CancionController {
             return new ResponseEntity<>(cancion, HttpStatus.BAD_REQUEST);
         }
     }
+
+    @PutMapping("/modificar")
+    public ResponseEntity<Cancion> modificar (@RequestBody Cancion cancion)
+    {
+        Optional<Cancion> cancionEncontrada = cancionRepositorio.findById(cancion.getId());
+        Cancion Final=cancionEncontrada.get();
+        Final.setNombre(cancion.getNombre());
+        Final.setNombreAlbum(cancion.getNombreAlbum());
+        Final.setNombreArtista(cancion.getNombreArtista());
+        Final.setImagenURL(cancion.getImagenURL());
+        Final.setGenero(cancion.getGenero());
+        cancionRepositorio.save(Final);
+        return ResponseEntity.ok(Final);
+    }
 }
