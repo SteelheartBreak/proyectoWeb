@@ -1,6 +1,5 @@
 package com.musicalist.intermediator.intermediator.Modelo;
 
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,9 +14,7 @@ public class Cancion {
     @GeneratedValue
     private Long id;
 
-
     private String nombre;
-
 
     private String nombreArtista;
 
@@ -36,7 +33,7 @@ public class Cancion {
     public Cancion() {
     }
 
-    public Cancion( String nombre, String nombreArtista, String nombreAlbum, String imagenURL) {
+    public Cancion(String nombre, String nombreArtista, String nombreAlbum, String imagenURL) {
         this.nombre = nombre;
         this.nombreArtista = nombreArtista;
         this.nombreAlbum = nombreAlbum;
@@ -98,14 +95,4 @@ public class Cancion {
     public void setVotantes(List<Usuario> votantes) {
         this.votantes = votantes;
     }
-
-
-
-    
-
-
-
-
-
-
 }
