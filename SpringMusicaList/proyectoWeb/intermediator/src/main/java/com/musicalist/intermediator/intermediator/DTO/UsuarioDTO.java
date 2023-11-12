@@ -3,7 +3,7 @@ package com.musicalist.intermediator.intermediator.DTO;
 import java.util.List;
 
 public class UsuarioDTO {
-    private Long id;
+    private Integer id;
     private String nombre;
     private String contrasenia;
     private String correo;
@@ -11,10 +11,9 @@ public class UsuarioDTO {
     private List<CancionDTO> cancionesLiked;
 
     public UsuarioDTO() {
-        // Constructor vacío necesario para la deserialización
     }
 
-    public UsuarioDTO(Long id, String nombre, String contrasenia, String correo, String rol, List<CancionDTO> cancionesLiked) {
+    public UsuarioDTO(Integer id, String nombre, String contrasenia, String correo, String rol, List<CancionDTO> cancionesLiked) {
         this.id = id;
         this.nombre = nombre;
         this.contrasenia = contrasenia;
@@ -23,11 +22,11 @@ public class UsuarioDTO {
         this.cancionesLiked = cancionesLiked;
     }
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
