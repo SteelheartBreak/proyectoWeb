@@ -2,12 +2,15 @@ package com.musicalist.intermediator.intermediator.Configuracion;
 
 import java.io.Serializable;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
 
 @Embeddable
 public class VotoID implements Serializable
 {
+    @Column(name = "cancion_id")
     private Long cancionId;
+    @Column(name = "usuario_id")
     private Long usuarioId;
 
     public VotoID() {

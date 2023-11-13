@@ -41,4 +41,16 @@ public class Canciones_like {
     public Usuario getUsuario() {
         return usuario;
     }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario=usuario;
+    }
+
+    public void setCancion(Cancion cancion) {
+        this.cancion=cancion;
+    }
+    public void setvoto(VotoID voto)
+    {
+        this.voto=voto;
+    }
 }
