@@ -4,9 +4,12 @@ import java.util.List;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.*;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 
-
+@Data
+@NoArgsConstructor
 @Entity
 public class Usuario {
 
@@ -22,9 +25,6 @@ public class Usuario {
     @ManyToMany(mappedBy = "votantes")
     @JsonIgnore
     private List<Cancion> cancionesLiked;
-
-    public Usuario() {
-    }
 
     public Usuario(String nombre, String contrasenia, String correo, String rol) {
         this.nombre = nombre;

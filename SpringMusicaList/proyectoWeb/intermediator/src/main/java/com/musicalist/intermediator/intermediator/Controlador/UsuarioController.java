@@ -6,10 +6,16 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import com.musicalist.intermediator.intermediator.Modelo.Usuario;
 import com.musicalist.intermediator.intermediator.Repositorio.UsuarioRepositorio;
+import com.musicalist.intermediator.intermediator.seguridad.JWTGenerator;
 
 import io.swagger.v3.oas.annotations.Operation;
 
@@ -21,11 +27,20 @@ public class UsuarioController {
     @Autowired
     Canciones_likeController voto;
 
+        @Autowired
+    AuthenticationManager authenticationManager;
+
+    @Autowired
+    JWTGenerator jwtGenerator;
+
+    @Autowired
+    PasswordEncoder passwordEncoder;
+
     @CrossOrigin
     @GetMapping("/find/correo/{correo}")
     @Operation(summary = "Obtener un usuario por correo")
-    public ResponseEntity<Usuario> findByCorreo(@PathVariable String correo) {
-        Usuario usuarioEncontrada = usuarioRepositorio.findByCorreo(correo);
+    public ResponseEntity<Optional<Usuario>> findByCorreo(@PathVariable String correo) {
+         Optional<Usuario> usuarioEncontrada = usuarioRepositorio.findByCorreo(correo);
         return ResponseEntity.ok(usuarioEncontrada);
     }
 
@@ -36,6 +51,7 @@ public class UsuarioController {
             ResponseEntity<Usuario> response = new ResponseEntity<>(user, HttpStatus.BAD_REQUEST);
             return response;
         }
+        user.setContrasenia(passwordEncoder.encode(user.getContrasenia()));
         usuarioRepositorio.save(user);
         ResponseEntity<Usuario> response = new ResponseEntity<>(user, HttpStatus.CREATED);
         return response;
@@ -80,5 +96,36 @@ public class UsuarioController {
         Final.setRol(user.getRol());
         usuarioRepositorio.save(Final);
         return ResponseEntity.ok(Final);
+    }
+
+        @PostMapping("/login")
+    public ResponseEntity loginUser(@RequestBody Usuario user) {
+        Authentication auth = authenticationManager.authenticate(
+            new UsernamePasswordAuthenticationToken(user.getCorreo(), user.getContrasenia())
+        );
+        SecurityContextHolder.getContext().setAuthentication(auth);
+
+        String token = jwtGenerator.generateToken(auth);
+        return new ResponseEntity<String>(token, HttpStatus.OK);
+    }
+
+    @GetMapping("/details")
+    public ResponseEntity<Usuario> buscarUser(){
+    
+        // Obtener el correo del usuario autenticado
+        String correo = SecurityContextHolder.getContext().getAuthentication().getName();
+    
+        // Buscar el usuario por correo
+        Optional<Usuario> userOptional = usuarioRepositorio.findByCorreo(correo);
+    
+        // Verificar si el Optional contiene un valor (usuario)
+        if (!userOptional.isPresent()) {
+            // Si no se encuentra el usuario, devuelve una respuesta con HttpStatus.NOT_FOUND
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    
+        // Si se encuentra el usuario, extraer el valor de Optional y devolverlo en la respuesta
+        Usuario user = userOptional.get();
+        return new ResponseEntity<>(user, HttpStatus.OK);
     }
 }

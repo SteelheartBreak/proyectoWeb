@@ -6,6 +6,7 @@ import java.util.Random;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import com.musicalist.intermediator.intermediator.Repositorio.CancionRepositorio;
 import com.musicalist.intermediator.intermediator.Repositorio.GeneroRepositorio;
@@ -16,6 +17,8 @@ import jakarta.transaction.Transactional;
 @Controller
 @Transactional
 public class IniciarDatos implements ApplicationRunner {
+        @Autowired
+    PasswordEncoder passwordEncoder;
 
     @Autowired
     CancionRepositorio cancionRepositorio;
@@ -58,13 +61,13 @@ public class IniciarDatos implements ApplicationRunner {
         cancionRepositorio.save(new Cancion("amanecer contigo", "artista q", "album",
                 "https://i.scdn.co/image/ab67616d0000b27349d694203245f241a1bcaa72"));
 
-        usuarioRepositorio.save(new Usuario("Juan", "123", "a@a.com", "Administrador"));
-        usuarioRepositorio.save(new Usuario("Pedro", "123", "b@b.com", "Usuario"));
-        usuarioRepositorio.save(new Usuario("Maria", "123", "c@c.com", "Usuario"));
-        usuarioRepositorio.save(new Usuario("Luis", "123", "d@d.com", "Usuario"));
-        usuarioRepositorio.save(new Usuario("Carlos", "123", "e@e.com", "Usuario"));
-        usuarioRepositorio.save(new Usuario("Ana", "123", "f@f.com", "Usuario"));
-        usuarioRepositorio.save(new Usuario("Jose", "123", "g@g.com", "Usuario"));
+        usuarioRepositorio.save(new Usuario("Juan", passwordEncoder.encode("123"), "a@a.com", "Administrador"));
+        usuarioRepositorio.save(new Usuario("Pedro", passwordEncoder.encode("123"), "b@b.com", "Usuario"));
+        usuarioRepositorio.save(new Usuario("Maria", passwordEncoder.encode("123"), "c@c.com", "Usuario"));
+        usuarioRepositorio.save(new Usuario("Luis", passwordEncoder.encode("123"), "d@d.com", "Usuario"));
+        usuarioRepositorio.save(new Usuario("Carlos", passwordEncoder.encode("123"), "e@e.com", "Usuario"));
+        usuarioRepositorio.save(new Usuario("Ana", passwordEncoder.encode("123"), "f@f.com", "Usuario"));
+        usuarioRepositorio.save(new Usuario("Jose", passwordEncoder.encode("123"), "g@g.com", "Usuario"));
 
         Random random = new Random(123);
 
