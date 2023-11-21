@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import com.musicalist.intermediator.intermediator.Modelo.Usuario;
 import com.musicalist.intermediator.intermediator.Repositorio.UsuarioRepositorio;
 import com.musicalist.intermediator.intermediator.seguridad.JWTGenerator;
+import org.springframework.security.core.AuthenticationException;
 
 import io.swagger.v3.oas.annotations.Operation;
 
@@ -27,7 +28,7 @@ public class UsuarioController {
     @Autowired
     Canciones_likeController voto;
 
-        @Autowired
+    @Autowired
     AuthenticationManager authenticationManager;
 
     @Autowired
@@ -39,9 +40,13 @@ public class UsuarioController {
     @CrossOrigin
     @GetMapping("/find/correo/{correo}")
     @Operation(summary = "Obtener un usuario por correo")
-    public ResponseEntity<Optional<Usuario>> findByCorreo(@PathVariable String correo) {
-         Optional<Usuario> usuarioEncontrada = usuarioRepositorio.findByCorreo(correo);
-        return ResponseEntity.ok(usuarioEncontrada);
+    public ResponseEntity<Usuario> findByCorreo(@PathVariable String correo) {
+        Optional<Usuario> usuarioEncontrada = usuarioRepositorio.findByCorreo(correo);
+        if (usuarioEncontrada.isPresent()) {
+            Usuario encontrado = usuarioEncontrada.get();
+            return ResponseEntity.ok(encontrado);
+        }
+        return ResponseEntity.ok(null);
     }
 
     @Operation(summary = "Agregar un Usuario")
@@ -86,45 +91,51 @@ public class UsuarioController {
     }
 
     @PutMapping("/modificar")
-    public ResponseEntity<Usuario> modificar (@RequestBody Usuario user)
-    {
+    public ResponseEntity<Usuario> modificar(@RequestBody Usuario user) {
         Optional<Usuario> usuarioEncontrada = usuarioRepositorio.findById(user.getId());
-        Usuario Final=usuarioEncontrada.get();
+        Usuario Final = usuarioEncontrada.get();
         Final.setNombre(user.getNombre());
         Final.setCorreo(user.getCorreo());
-        Final.setContrasenia(passwordEncoder.encode(user.getContrasenia()));
+        if(user.getContrasenia()!="")
+        {
+            Final.setContrasenia(passwordEncoder.encode(user.getContrasenia()));
+        }
         Final.setRol(user.getRol());
         usuarioRepositorio.save(Final);
         return ResponseEntity.ok(Final);
     }
 
-        @PostMapping("/login")
-    public ResponseEntity loginUser(@RequestBody Usuario user) {
-        Authentication auth = authenticationManager.authenticate(
-            new UsernamePasswordAuthenticationToken(user.getCorreo(), user.getContrasenia())
-        );
-        SecurityContextHolder.getContext().setAuthentication(auth);
-
-        String token = jwtGenerator.generateToken(auth);
-        return new ResponseEntity<String>(token, HttpStatus.OK);
-    }
+    @PostMapping("/login")
+    public ResponseEntity<String> loginUser(@RequestBody Usuario user) {
+        Usuario rol = null;
+        try {
+            Authentication auth = authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(user.getCorreo(), user.getContrasenia()));
+            SecurityContextHolder.getContext().setAuthentication(auth);
+            Optional<Usuario> BuscarRol = usuarioRepositorio.findByCorreo(user.getCorreo());
+            if (BuscarRol.isPresent()) {
+                rol = BuscarRol.get();
+            }
+            if (rol != null) {
+                String token = jwtGenerator.generateToken(auth, rol.getRol());
+                return new ResponseEntity<>(token, HttpStatus.OK);
+            }
+            return new ResponseEntity<>("Credenciales erroneas", HttpStatus.OK);
+        } catch (AuthenticationException e) {
+            return new ResponseEntity<>("Credenciales erroneas", HttpStatus.OK);
+        }
+    }   
 
     @GetMapping("/details")
-    public ResponseEntity<Usuario> buscarUser(){
-    
-        // Obtener el correo del usuario autenticado
+    public ResponseEntity<Usuario> buscarUser() {
+
         String correo = SecurityContextHolder.getContext().getAuthentication().getName();
-    
-        // Buscar el usuario por correo
+
         Optional<Usuario> userOptional = usuarioRepositorio.findByCorreo(correo);
-    
-        // Verificar si el Optional contiene un valor (usuario)
+
         if (!userOptional.isPresent()) {
-            // Si no se encuentra el usuario, devuelve una respuesta con HttpStatus.NOT_FOUND
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-    
-        // Si se encuentra el usuario, extraer el valor de Optional y devolverlo en la respuesta
         Usuario user = userOptional.get();
         return new ResponseEntity<>(user, HttpStatus.OK);
     }

@@ -16,7 +16,7 @@ public class JWTGenerator {
     public static final Long EXPIRATION_TIME = 7000000L;
     private static final Key key = Keys.secretKeyFor(SignatureAlgorithm.HS512);
     
-    public String generateToken(Authentication authentication) {
+    public String generateToken(Authentication authentication,String rol) {
         
         
         String username = authentication.getName();
@@ -24,6 +24,7 @@ public class JWTGenerator {
         Date expireDate = new Date (currentDate.getTime()+EXPIRATION_TIME);
 
         String token = Jwts.builder().setSubject(username)
+        .claim("rol", rol)
         .setIssuedAt(currentDate)
         .setExpiration(expireDate)
         .signWith(key,SignatureAlgorithm.HS512)

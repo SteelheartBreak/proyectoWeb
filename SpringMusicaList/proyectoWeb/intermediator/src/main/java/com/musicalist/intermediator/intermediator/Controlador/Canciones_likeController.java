@@ -88,4 +88,18 @@ public class Canciones_likeController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
+
+    @DeleteMapping("/borrarVoto/{cancionId}/{usuarioId}")
+    @Operation(summary = "Borrar un voto")
+    public ResponseEntity<String> borrarVoto(@PathVariable Long cancionId, @PathVariable Long usuarioId) {
+        System.out.println("aaaa");
+        List<Canciones_like> Votos = votoRepositorio.findByUsuarioId(usuarioId);
+        for (Canciones_like votico : Votos) {
+            if (votico.getCancion().getId() == cancionId) {
+                votoRepositorio.delete(votico);
+                return new ResponseEntity<>("Voto eliminado", HttpStatus.NO_CONTENT);
+            }
+        }
+        return null;
+    }
 }
