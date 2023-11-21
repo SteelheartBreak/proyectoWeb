@@ -3,7 +3,7 @@ package com.musicalist.intermediator.intermediator.DTO;
 import java.util.List;
 
 public class CancionDTO {
-    private Long id;
+    private Integer id;
     private String nombre;
     private String nombreArtista;
     private String nombreAlbum;
@@ -14,7 +14,7 @@ public class CancionDTO {
     public CancionDTO() {
     }
 
-    public CancionDTO(Long id, String nombre, String nombreArtista, String nombreAlbum, String imagenURL) {
+    public CancionDTO(Integer id, String nombre, String nombreArtista, String nombreAlbum, String imagenURL) {
         this.id = id;
         this.nombre = nombre;
         this.nombreArtista = nombreArtista;
@@ -22,7 +22,7 @@ public class CancionDTO {
         this.imagenURL = imagenURL;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -50,7 +50,7 @@ public class CancionDTO {
         this.votantes = votantes;
     }
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 

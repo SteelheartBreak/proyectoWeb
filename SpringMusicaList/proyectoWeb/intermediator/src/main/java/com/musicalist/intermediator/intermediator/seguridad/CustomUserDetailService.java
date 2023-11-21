@@ -20,16 +20,17 @@ import com.musicalist.intermediator.intermediator.Repositorio.UsuarioRepositorio
 @Service
 public class CustomUserDetailService implements UserDetailsService {
 
+    private final  UsuarioRepositorio usuarioRepositorio;
     @Autowired
-    private UsuarioRepositorio userRepository;
+    public CustomUserDetailService(UsuarioRepositorio usuarioRepositorio)
+    {
+        this.usuarioRepositorio=usuarioRepositorio;
+    }
 
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Usuario userDB = userRepository.findByCorreo(username).orElseThrow(
-            () -> new UsernameNotFoundException("User not found")
-        );
-
+        Usuario userDB = usuarioRepositorio.findByCorreo(username);
         List<String> roles = List.of(userDB.getRol());
         UserDetails userDetails = new User (userDB.getCorreo(),
             userDB.getContrasenia(),

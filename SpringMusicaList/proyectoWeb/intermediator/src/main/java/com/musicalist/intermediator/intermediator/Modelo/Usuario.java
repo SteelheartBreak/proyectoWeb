@@ -15,7 +15,7 @@ public class Usuario {
 
     @Id
     @GeneratedValue
-    private Long id;
+    private Integer id;
 
     private String nombre;
     private String contrasenia;
@@ -33,7 +33,7 @@ public class Usuario {
         this.rol = rol;
     }
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
@@ -51,6 +51,11 @@ public class Usuario {
 
     public String getRol() {
         return rol;
+    }
+
+    public void setId(Integer id)
+    {
+        this.id=id;
     }
 
     public void setNombre(String nombre) {

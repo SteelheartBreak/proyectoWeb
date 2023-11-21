@@ -47,7 +47,7 @@ public class GeneroService {
         generoRepositorio.save(generoGuardar);
     }
 
-    private GeneroDTO convertiraDTO(Genero genero) {
+    public GeneroDTO convertiraDTO(Genero genero) {
         if(genero==null)
         {
             return null;
@@ -59,7 +59,7 @@ public class GeneroService {
         return generoDTO;
     }
 
-    private Genero convertiraEntidad(GeneroDTO generoDTO) {
+    public Genero convertiraEntidad(GeneroDTO generoDTO) {
         if(generoDTO==null)
         {
             return null;

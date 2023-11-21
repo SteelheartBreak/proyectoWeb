@@ -8,8 +8,8 @@ import com.musicalist.intermediator.intermediator.Modelo.Canciones_like;
 
 public interface Canciones_likeRepositorio extends JpaRepository<Canciones_like, Long> {
 
-    List<Canciones_like> findByUsuarioId(Long id);
+    List<Canciones_like> findByUsuarioId(Integer id);
 
-    List<Canciones_like> findByCancionId(Long id);
+    List<Canciones_like> findByCancionId(Integer id);
 
 }

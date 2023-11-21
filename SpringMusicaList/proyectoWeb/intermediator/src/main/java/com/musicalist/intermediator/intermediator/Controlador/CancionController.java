@@ -1,15 +1,12 @@
 package com.musicalist.intermediator.intermediator.Controlador;
 
 import java.util.List;
-import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import com.musicalist.intermediator.intermediator.Modelo.Cancion;
-import com.musicalist.intermediator.intermediator.Repositorio.CancionRepositorio;
-
+import com.musicalist.intermediator.intermediator.DTO.CancionDTO;
+import com.musicalist.intermediator.intermediator.Servicios.CancionService;
 import io.swagger.v3.oas.annotations.Operation;
 
 @RestController
@@ -18,47 +15,43 @@ import io.swagger.v3.oas.annotations.Operation;
 public class CancionController {
 
     @Autowired
-    CancionRepositorio cancionRepositorio;
+    CancionService cancionService;
 
     @GetMapping("/all")
     @Operation(summary = "Obtener todas las canciones")
-    public ResponseEntity<List<Cancion>> getAll() {
-        List<Cancion> canciones = cancionRepositorio.findAll();
+    public ResponseEntity<List<CancionDTO>> getAll() {
+        List<CancionDTO> canciones = cancionService.Todos();
         return new ResponseEntity<>(canciones, HttpStatus.OK);
     }
 
     @GetMapping("/find/{id}")
     @Operation(summary = "Obtener una canción por id")
-    public ResponseEntity<Cancion> findById(@PathVariable Long id) {
-        Optional<Cancion> cancionEncontrada = cancionRepositorio.findById(id);
-        if (cancionEncontrada.isPresent()) {
-            return new ResponseEntity<>(cancionEncontrada.get(), HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
-        }
+    public ResponseEntity<CancionDTO> findById(@PathVariable Integer id) {
+        CancionDTO cancionEncontrada = cancionService.BuscarID(id);
+        return new ResponseEntity<>(cancionEncontrada, HttpStatus.OK);
     }
 
     @GetMapping("/findName/{nombre}")
     @Operation(summary = "Obtener una canción por Nombre")
-    public ResponseEntity<Cancion> findByName(@PathVariable String nombre) {
-        Cancion cancion = cancionRepositorio.findByNombre(nombre);
+    public ResponseEntity<CancionDTO> findByName(@PathVariable String nombre) {
+        CancionDTO cancion =cancionService.BuscarNombre(nombre);
         return ResponseEntity.ok(cancion);
     }
 
     @GetMapping("/findGender/{id}")
     @Operation(summary = "Obtener canciones por género")
-    public ResponseEntity<List<Cancion>> findByGender(@PathVariable Long id) {
-        List<Cancion> canciones = cancionRepositorio.findByGenero(id);
+    public ResponseEntity<List<CancionDTO>> findByGender(@PathVariable Integer id) {
+        List<CancionDTO> canciones = cancionService.BuscarGenero(id);
         return new ResponseEntity<>(canciones, HttpStatus.OK);
     }
 
     @DeleteMapping("/delete/{id}")
     @Operation(summary = "Eliminar una canción por id")
-    public ResponseEntity<String> borrar(@PathVariable Long id) {
+    public ResponseEntity<String> borrar(@PathVariable Integer id) {
         if (id != null) {
-            Optional<Cancion> cancionEncontrada = cancionRepositorio.findById(id);
-            if (cancionEncontrada.isPresent()) {
-                cancionRepositorio.delete(cancionEncontrada.get());
+            CancionDTO cancionEncontrada = cancionService.BuscarID(id);
+            if (cancionEncontrada!=null) {
+                cancionService.borrar(cancionEncontrada);
                 return new ResponseEntity<>("Canción eliminada", HttpStatus.NO_CONTENT);
             } else {
                 return new ResponseEntity<>("Canción no encontrada", HttpStatus.NOT_FOUND);
@@ -70,12 +63,11 @@ public class CancionController {
 
     @PutMapping("/update/{id}")
     @Operation(summary = "Actualizar una canción por id")
-    public ResponseEntity<String> actualizar(@PathVariable Long id, @RequestBody Cancion updatedCancion) {
-        Optional<Cancion> cancionEncontrada = cancionRepositorio.findById(id);
-        if (cancionEncontrada.isPresent()) {
-            Cancion cancion = cancionEncontrada.get();
-            cancion.setNombre(updatedCancion.getNombre());
-            cancionRepositorio.save(cancion);
+    public ResponseEntity<String> actualizar(@PathVariable Integer id, @RequestBody CancionDTO updatedCancion) {
+        CancionDTO cancionEncontrada = cancionService.BuscarID(id);
+        if (cancionEncontrada!=null) {
+            cancionEncontrada.setNombre(updatedCancion.getNombre());
+            cancionService.guardar(cancionEncontrada);
             return new ResponseEntity<>("Canción actualizada correctamente", HttpStatus.OK);
         } else {
             return new ResponseEntity<>("Canción no encontrada", HttpStatus.NOT_FOUND);
@@ -84,9 +76,9 @@ public class CancionController {
 
     @PostMapping("/add")
     @Operation(summary = "Agregar una canción")
-    public ResponseEntity<Cancion> add(@RequestBody Cancion cancion) {
+    public ResponseEntity<CancionDTO> add(@RequestBody CancionDTO cancion) {
         if (cancion != null) {
-            cancionRepositorio.save(cancion);
+            cancionService.guardar(cancion);
             return new ResponseEntity<>(cancion, HttpStatus.CREATED);
         } else {
             return new ResponseEntity<>(cancion, HttpStatus.BAD_REQUEST);
@@ -94,16 +86,14 @@ public class CancionController {
     }
 
     @PutMapping("/modificar")
-    public ResponseEntity<Cancion> modificar (@RequestBody Cancion cancion)
-    {
-        Optional<Cancion> cancionEncontrada = cancionRepositorio.findById(cancion.getId());
-        Cancion Final=cancionEncontrada.get();
+    public ResponseEntity<CancionDTO> modificar(@RequestBody CancionDTO cancion) {
+        CancionDTO Final = cancionService.BuscarID(cancion.getId());
         Final.setNombre(cancion.getNombre());
         Final.setNombreAlbum(cancion.getNombreAlbum());
         Final.setNombreArtista(cancion.getNombreArtista());
         Final.setImagenURL(cancion.getImagenURL());
         Final.setGenero(cancion.getGenero());
-        cancionRepositorio.save(Final);
+        cancionService.guardar(Final);
         return ResponseEntity.ok(Final);
     }
 }

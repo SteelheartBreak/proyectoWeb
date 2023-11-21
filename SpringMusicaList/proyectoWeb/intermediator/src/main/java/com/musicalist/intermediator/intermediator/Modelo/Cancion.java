@@ -12,7 +12,7 @@ public class Cancion {
 
     @Id
     @GeneratedValue
-    private Long id;
+    private Integer id;
 
     private String nombre;
 
@@ -40,11 +40,11 @@ public class Cancion {
         this.imagenURL = imagenURL;
     }
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

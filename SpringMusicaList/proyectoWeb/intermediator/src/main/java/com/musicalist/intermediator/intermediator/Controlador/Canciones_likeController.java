@@ -38,7 +38,7 @@ public class Canciones_likeController {
 
     @DeleteMapping("/delete/User/{id}")
     @Operation(summary = "Borrar un voto por id")
-    public ResponseEntity<String> deleteByUsuarioId(@PathVariable Long id) {
+    public ResponseEntity<String> deleteByUsuarioId(@PathVariable Integer id) {
         List<Canciones_like> Votos = votoRepositorio.findByUsuarioId(id);
         votoRepositorio.deleteAll(Votos);
         return new ResponseEntity<>("Voto eliminado", HttpStatus.NO_CONTENT);
@@ -46,14 +46,14 @@ public class Canciones_likeController {
 
     @DeleteMapping("/delete/Cancion/{id}")
     @Operation(summary = "Borrar un voto por id")
-    public ResponseEntity<String> deleteByCancionId(@PathVariable Long id) {
+    public ResponseEntity<String> deleteByCancionId(@PathVariable Integer id) {
         List<Canciones_like> Votos = votoRepositorio.findByCancionId(id);
         votoRepositorio.deleteAll(Votos);
         return new ResponseEntity<>("Voto eliminado", HttpStatus.NO_CONTENT);
     }
 
     @GetMapping("/find/{cancionId}/{usuarioId}")
-    public Canciones_like buscarVoto(@PathVariable Long cancionId, @PathVariable Long usuarioId) {
+    public Canciones_like buscarVoto(@PathVariable Integer cancionId, @PathVariable Integer usuarioId) {
         List<Canciones_like> Votos = votoRepositorio.findByUsuarioId(usuarioId);
         for (Canciones_like votico : Votos) {
             if (votico.getCancion().getId() == cancionId) {
@@ -91,8 +91,7 @@ public class Canciones_likeController {
 
     @DeleteMapping("/borrarVoto/{cancionId}/{usuarioId}")
     @Operation(summary = "Borrar un voto")
-    public ResponseEntity<String> borrarVoto(@PathVariable Long cancionId, @PathVariable Long usuarioId) {
-        System.out.println("aaaa");
+    public ResponseEntity<String> borrarVoto(@PathVariable Integer cancionId, @PathVariable Integer usuarioId) {
         List<Canciones_like> Votos = votoRepositorio.findByUsuarioId(usuarioId);
         for (Canciones_like votico : Votos) {
             if (votico.getCancion().getId() == cancionId) {

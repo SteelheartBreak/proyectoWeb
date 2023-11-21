@@ -9,31 +9,31 @@ import jakarta.persistence.Embeddable;
 public class VotoID implements Serializable
 {
     @Column(name = "cancion_id")
-    private Long cancionId;
+    private Integer cancionId;
     @Column(name = "usuario_id")
-    private Long usuarioId;
+    private Integer usuarioId;
 
     public VotoID() {
     }
 
-    public VotoID(Long cancionId, Long usuarioId) {
+    public VotoID(Integer cancionId, Integer usuarioId) {
         this.cancionId = cancionId;
         this.usuarioId = usuarioId;
     }
 
-    public Long getCancionId() {
+    public Integer getCancionId() {
         return cancionId;
     }
 
-    public void setCancionId(Long cancionId) {
+    public void setCancionId(Integer cancionId) {
         this.cancionId = cancionId;
     }
 
-    public Long getUsuarioId() {
+    public Integer getUsuarioId() {
         return usuarioId;
     }
 
-    public void setUsuarioId(Long usuarioId) {
+    public void setUsuarioId(Integer usuarioId) {
         this.usuarioId = usuarioId;
     }
 }
