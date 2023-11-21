@@ -1,30 +1,30 @@
 package com.musicalist.intermediator.intermediator.DTO;
 
 public class CancionesLikeDTO {
-    private Long cancionId;
-    private Long usuarioId;
+    private Integer cancionId;
+    private Integer usuarioId;
 
     public CancionesLikeDTO() {
     }
 
-    public CancionesLikeDTO(Long cancionId, Long usuarioId) {
+    public CancionesLikeDTO(Integer cancionId, Integer usuarioId) {
         this.cancionId = cancionId;
         this.usuarioId = usuarioId;
     }
 
-    public Long getCancionId() {
+    public Integer getCancionId() {
         return cancionId;
     }
 
-    public void setCancionId(Long cancionId) {
+    public void setCancionId(Integer cancionId) {
         this.cancionId = cancionId;
     }
 
-    public Long getUsuarioId() {
+    public Integer getUsuarioId() {
         return usuarioId;
     }
 
-    public void setUsuarioId(Long usuarioId) {
+    public void setUsuarioId(Integer usuarioId) {
         this.usuarioId = usuarioId;
     }
 }

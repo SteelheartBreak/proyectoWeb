@@ -1,8 +1,6 @@
 package com.musicalist.intermediator.intermediator.Controlador;
 
 import java.util.List;
-import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,15 +11,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import com.musicalist.intermediator.intermediator.Configuracion.VotoID;
+import com.musicalist.intermediator.intermediator.DTO.CancionDTO;
 import com.musicalist.intermediator.intermediator.DTO.CancionesLikeDTO;
-import com.musicalist.intermediator.intermediator.Modelo.Cancion;
-import com.musicalist.intermediator.intermediator.Modelo.Canciones_like;
-import com.musicalist.intermediator.intermediator.Modelo.Usuario;
-import com.musicalist.intermediator.intermediator.Repositorio.CancionRepositorio;
-import com.musicalist.intermediator.intermediator.Repositorio.Canciones_likeRepositorio;
-import com.musicalist.intermediator.intermediator.Repositorio.UsuarioRepositorio;
+import com.musicalist.intermediator.intermediator.DTO.UsuarioDTO;
+import com.musicalist.intermediator.intermediator.Servicios.CancionService;
+import com.musicalist.intermediator.intermediator.Servicios.Cancion_likeService;
+import com.musicalist.intermediator.intermediator.Servicios.UsuarioService;
 
 import io.swagger.v3.oas.annotations.Operation;
 
@@ -30,33 +25,33 @@ import io.swagger.v3.oas.annotations.Operation;
 public class Canciones_likeController {
 
     @Autowired
-    Canciones_likeRepositorio votoRepositorio;
+    UsuarioService usuarioService;
     @Autowired
-    UsuarioRepositorio usuarioRepositorio;
+    CancionService cancionService;
     @Autowired
-    CancionRepositorio cancionRepositorio;
+    Cancion_likeService cancion_likeService;
 
     @DeleteMapping("/delete/User/{id}")
     @Operation(summary = "Borrar un voto por id")
     public ResponseEntity<String> deleteByUsuarioId(@PathVariable Integer id) {
-        List<Canciones_like> Votos = votoRepositorio.findByUsuarioId(id);
-        votoRepositorio.deleteAll(Votos);
+        List<CancionesLikeDTO> Votos = cancion_likeService.VotosUsuario(id);
+        cancion_likeService.BorrarTodos(Votos);
         return new ResponseEntity<>("Voto eliminado", HttpStatus.NO_CONTENT);
     }
 
     @DeleteMapping("/delete/Cancion/{id}")
     @Operation(summary = "Borrar un voto por id")
     public ResponseEntity<String> deleteByCancionId(@PathVariable Integer id) {
-        List<Canciones_like> Votos = votoRepositorio.findByCancionId(id);
-        votoRepositorio.deleteAll(Votos);
+        List<CancionesLikeDTO> Votos = cancion_likeService.VotosCancion(id);
+        cancion_likeService.BorrarTodos(Votos);
         return new ResponseEntity<>("Voto eliminado", HttpStatus.NO_CONTENT);
     }
 
     @GetMapping("/find/{cancionId}/{usuarioId}")
-    public Canciones_like buscarVoto(@PathVariable Integer cancionId, @PathVariable Integer usuarioId) {
-        List<Canciones_like> Votos = votoRepositorio.findByUsuarioId(usuarioId);
-        for (Canciones_like votico : Votos) {
-            if (votico.getCancion().getId() == cancionId) {
+    public CancionesLikeDTO buscarVoto(@PathVariable Integer cancionId, @PathVariable Integer usuarioId) {
+        List<CancionesLikeDTO> Votos = cancion_likeService.VotosUsuario(usuarioId);
+        for (CancionesLikeDTO votico : Votos) {
+            if (votico.getCancionId() == cancionId) {
                 return votico;
             }
         }
@@ -64,24 +59,17 @@ public class Canciones_likeController {
     }
 
     @PostMapping("/votar")
-    public ResponseEntity<Canciones_like> votar(@RequestBody CancionesLikeDTO voto) {
-        Canciones_like newVoto = new Canciones_like();
+    public ResponseEntity<CancionesLikeDTO> votar(@RequestBody CancionesLikeDTO voto) {
+        CancionesLikeDTO newVoto = new CancionesLikeDTO();
 
-        Optional<Usuario> usuario = usuarioRepositorio.findById(voto.getUsuarioId());
-        Optional<Cancion> cancion = cancionRepositorio.findById(voto.getCancionId());
+        UsuarioDTO user = usuarioService.BuscarID(voto.getUsuarioId());
+        CancionDTO song = cancionService.BuscarID(voto.getCancionId());
 
-        if (usuario.isPresent() && cancion.isPresent()) {
+        if (user != null && song != null) {
 
-            Usuario user = usuario.get();
-            Cancion song = cancion.get();
-            newVoto.setUsuario(user);
-            newVoto.setCancion(song);
-            VotoID id=new VotoID();
-            id.setCancionId(song.getId());
-            id.setUsuarioId(user.getId());
-            newVoto.setvoto(id);
-
-            votoRepositorio.save(newVoto);
+            newVoto.setUsuarioId(user.getId());
+            newVoto.setCancionId(song.getId());
+            cancion_likeService.guardar(newVoto);
 
             return new ResponseEntity<>(newVoto, HttpStatus.CREATED);
         } else {
@@ -92,10 +80,10 @@ public class Canciones_likeController {
     @DeleteMapping("/borrarVoto/{cancionId}/{usuarioId}")
     @Operation(summary = "Borrar un voto")
     public ResponseEntity<String> borrarVoto(@PathVariable Integer cancionId, @PathVariable Integer usuarioId) {
-        List<Canciones_like> Votos = votoRepositorio.findByUsuarioId(usuarioId);
-        for (Canciones_like votico : Votos) {
-            if (votico.getCancion().getId() == cancionId) {
-                votoRepositorio.delete(votico);
+        List<CancionesLikeDTO> Votos = cancion_likeService.VotosUsuario(usuarioId);
+        for (CancionesLikeDTO votico : Votos) {
+            if (votico.getCancionId() == cancionId) {
+                cancion_likeService.Borrar(votico);
                 return new ResponseEntity<>("Voto eliminado", HttpStatus.NO_CONTENT);
             }
         }
