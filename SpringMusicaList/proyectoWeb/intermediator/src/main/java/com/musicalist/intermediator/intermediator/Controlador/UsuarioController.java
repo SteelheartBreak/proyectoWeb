@@ -92,7 +92,7 @@ public class UsuarioController {
         Usuario Final=usuarioEncontrada.get();
         Final.setNombre(user.getNombre());
         Final.setCorreo(user.getCorreo());
-        Final.setContrasenia(user.getContrasenia());
+        Final.setContrasenia(passwordEncoder.encode(user.getContrasenia()));
         Final.setRol(user.getRol());
         usuarioRepositorio.save(Final);
         return ResponseEntity.ok(Final);
