@@ -13,7 +13,7 @@ import io.jsonwebtoken.security.Keys;
 @Component
 public class JWTGenerator {
 
-    public static final Long EXPIRATION_TIME = 7000000L;
+    public static final Long EXPIRATION_TIME = 30 * 60 * 1000L;
     private static final Key key = Keys.secretKeyFor(SignatureAlgorithm.HS512);
     
     public String generateToken(Authentication authentication,String rol) {

@@ -14,23 +14,23 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import com.musicalist.intermediator.intermediator.Modelo.Usuario;
-import com.musicalist.intermediator.intermediator.Repositorio.UsuarioRepositorio;
+import com.musicalist.intermediator.intermediator.DTO.UsuarioDTO;
+import com.musicalist.intermediator.intermediator.Servicios.UsuarioService;
 
 @Service
 public class CustomUserDetailService implements UserDetailsService {
 
-    private final  UsuarioRepositorio usuarioRepositorio;
+    private final  UsuarioService usuarioService;
     @Autowired
-    public CustomUserDetailService(UsuarioRepositorio usuarioRepositorio)
+    public CustomUserDetailService(UsuarioService usuarioService)
     {
-        this.usuarioRepositorio=usuarioRepositorio;
+        this.usuarioService=usuarioService;
     }
 
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Usuario userDB = usuarioRepositorio.findByCorreo(username);
+        UsuarioDTO userDB = usuarioService.BuscarCorreo(username);
         List<String> roles = List.of(userDB.getRol());
         UserDetails userDetails = new User (userDB.getCorreo(),
             userDB.getContrasenia(),
